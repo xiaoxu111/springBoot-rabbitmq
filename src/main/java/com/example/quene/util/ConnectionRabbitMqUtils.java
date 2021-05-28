@@ -13,9 +13,9 @@ import java.util.concurrent.TimeoutException;
  */
 public class ConnectionRabbitMqUtils {
 
-    private static ConnectionFactory factory = null;
+    private static ConnectionFactory factory;
     // 重量级资源 放在静态代码块中，在类加载的时候执行且只执行一次
-    {
+    static {
         factory = new ConnectionFactory();
         // 设置主机
         // 设置主机
@@ -37,7 +37,7 @@ public class ConnectionRabbitMqUtils {
      */
     public static Connection getConnection() {
         try {
-           Connection connection = factory.newConnection();
+           return factory.newConnection();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TimeoutException e) {
@@ -53,10 +53,10 @@ public class ConnectionRabbitMqUtils {
      * @param connection
      * @param channel 
      */
-    public static void closeConnectionAndChannel(Connection connection, Channel channel) {
+    public static void closeConnectionAndChannel(Channel channel, Connection connection) {
         try {
-            if (connection != null) connection.close();
             if (channel != null) channel.close();
+            if (connection != null) connection.close();
         }catch (Exception e) {
             e.printStackTrace();
         }
