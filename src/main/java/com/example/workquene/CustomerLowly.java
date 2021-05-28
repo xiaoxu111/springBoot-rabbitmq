@@ -24,8 +24,15 @@ public class CustomerLowly {
         Channel channel = connection.createChannel();
         // 通过通道绑定消费的队列
         channel.queueDeclare("work", true, false, false, null);
+
+        // rabbitmq 自动确认机制，能者多劳，避免平均分配，消息堆积现象
+        // 第一步 在消费者中添加 channel.basicQos(1); 一次只接受一条未确认的消息
+        // 第二步 关闭消息自动确认机制 autoAck 设置为false
+        // 第三步 手动确认消息 channel.basicAck(envelope.getDeliveryTag(),false);
+
+        channel.basicQos(1);
         // 消费消息
-        channel.basicConsume("work", true, new DefaultConsumer(channel) {
+        channel.basicConsume("work", false, new DefaultConsumer(channel) {
             @Override // 最后一个参数消息队列中取出的消息
             public void handleDelivery(String consumerTag, Envelope envelope,
                                        AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -36,6 +43,8 @@ public class CustomerLowly {
                     e.printStackTrace();
                 }
                 System.out.println("消费者-1消费的消息:" + new String(body));
+                // 手动确认消息
+                channel.basicAck(envelope.getDeliveryTag(),false);
             }
         });
     }
