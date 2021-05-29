@@ -23,9 +23,9 @@ public class FanoutCustomer {
      * @param message
      */
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue,
-            exchange = @Exchange(name = "fanout-springBoot", type = "fanout")
-    ))
+            value = @Queue,  // 创建临时队列
+            exchange = @Exchange(name = "fanout-springBoot", type = "fanout") //指定交换机名称以及类型
+    )) // 让队列和交换机进行绑定
     public void revice1(String message) {
         System.out.println("message 1 : " + message);
     }
@@ -37,9 +37,9 @@ public class FanoutCustomer {
      * @param message
      */
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue,
-            exchange = @Exchange(name = "fanout-springBoot", type = "fanout")
-    ))
+            value = @Queue, // 创建临时队列
+            exchange = @Exchange(name = "fanout-springBoot", type = "fanout") //指定交换机名称以及类型
+    )) // 让队列和交换机进行绑定
     public void revice2(String message) {
         System.out.println("message 2 : " + message);
     }
