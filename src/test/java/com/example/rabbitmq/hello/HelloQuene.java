@@ -45,4 +45,14 @@ public class HelloQuene {
         }
     }
 
+    /**
+     * rabbitmq 第三种模型  fanout广播
+     * @author xuyayuan
+     * @date 2021/5/29 17:30
+     */
+    @Test
+    public void testFanout() {
+        rabbitTemplate.convertAndSend("fanout-springBoot", "", "这个是第三种模型 fanout 广播");
+    }
+
 }
