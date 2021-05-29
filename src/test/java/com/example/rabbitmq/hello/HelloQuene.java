@@ -66,4 +66,13 @@ public class HelloQuene {
         rabbitTemplate.convertAndSend("direct-springBoot", "warn", "使用第四种模式 direct模式 info的信息");
     }
 
+    /**
+     * rabbitmq 第五种模型 路由模式之 topic
+     * @author xuyayuan
+     * @date 2021/5/29 17:42
+     */
+    @Test
+    public void testTopic() {
+        rabbitTemplate.convertAndSend("topic-springBoot", "admin.login", "使用第五种模式 topic模式");
+    }
 }
