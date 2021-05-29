@@ -7,6 +7,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import sun.reflect.generics.tree.VoidDescriptor;
 
 /**
  * @author xuyayuan
@@ -53,6 +54,16 @@ public class HelloQuene {
     @Test
     public void testFanout() {
         rabbitTemplate.convertAndSend("fanout-springBoot", "", "这个是第三种模型 fanout 广播");
+    }
+
+    /**
+     * rabbitmq 第四种模型 路由模式之 direct
+     * @author xuyayuan
+     * @date 2021/5/29 17:42
+     */
+    @Test
+    public void testDirect() {
+        rabbitTemplate.convertAndSend("direct-springBoot", "warn", "使用第四种模式 direct模式 info的信息");
     }
 
 }
