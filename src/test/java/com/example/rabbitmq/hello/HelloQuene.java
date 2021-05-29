@@ -22,10 +22,27 @@ public class HelloQuene {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * rabbitmq 第一种模型 队列
+     * @author xuyayuan
+     * @date 2021/5/29 16:34
+     */
     @Test
     public void testHelloQuene() {
         // rabbitmq第一种模型 队列 生产者
         rabbitTemplate.convertAndSend("hello-springboot-rabbitmq", "hello-springboot");
+    }
+
+    /**
+     * rabbitmq 第二种模型  work队列
+     * @author xuyayuan
+     * @date 2021/5/29 16:34
+     */
+    @Test
+    public void testWorkQuene() {
+        for (int i = 0; i < 10; i++) {
+            rabbitTemplate.convertAndSend("work-springboot-rabbitmq", "workHello-springBoot" + "【" + i + "】");
+        }
     }
 
 }
